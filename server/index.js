@@ -3,6 +3,7 @@ const http = require("http").Server(app);
 const path = require('path');
 
 const io = require("socket.io")(http);
+const port = process.env.PORT || 3000;
 
 
 let Usercounter = 0;
@@ -33,6 +34,6 @@ io.on("connection", function(socket) {
   })
 });
 
-http.listen(80, function() {
-  console.log("listening to port:3000");
+http.listen(port, function() {
+  console.log("listening to port:" + port);
 });
