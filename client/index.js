@@ -1,5 +1,4 @@
 var socket = io();
-console.log(socket)
 socket.on('audioMessage', function (audioChunks) {
     const audioBlob = new Blob(audioChunks);
     const audioUrl = URL.createObjectURL(audioBlob);

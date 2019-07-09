@@ -8,8 +8,13 @@ const port = process.env.PORT || 3000;
 
 let Usercounter = 0;
 
+const voicesArr = [];
+
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+app.get("/voices", function(req, res) {
+  res.send(voicesArr);
 });
 app.get('/index.js', function(req, res) {
   res.sendFile((path.join(__dirname, '../client/index.js')));
@@ -27,6 +32,7 @@ io.on("connection", function(socket) {
 
   socket.on("audioMessage", function(msg) {
     io.emit("audioMessage", msg);
+    voicesArr.push({timeStamp: Date(), audioBlob: msg});
   });
 
   socket.on("recordStarted", () => {
