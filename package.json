@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Keep in touch with your favrouite ones",
   "scripts": {
-    "deploy": "npm i && cd server && node index.js",
+    "deploy": "npm i && node server/index.js",
     "start": "cd server && node index.js"
   },
   "dependencies": {
