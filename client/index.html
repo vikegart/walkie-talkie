@@ -1,5 +1,6 @@
 <style>
     @import url("https://fonts.googleapis.com/css?family=Roboto:300");
+
     body {
         background-color: #c0392b;
         font-family: 'Roboto', sans-serif;
@@ -96,44 +97,7 @@
     <a>Total user online :</a>
     <a class="usercount"></a>
 </div>
+<audio id="audio" src="https://www.soundjay.com/button/sounds/button-09.mp3" autoplay="false"></audio>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script>
-    var socket = io();
-    console.log(socket)
-    socket.on('audioMessage', function (audioChunks) {
-        const audioBlob = new Blob(audioChunks);
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
-    });
-
-    socket.on('user', function (usercount) {
-        $('.usercount').text(usercount)
-    });
-
-
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            const mediaRecorder = new MediaRecorder(stream);
-            var audioChunks = [];
-            $('.play-button').on('mousedown touchstart', function (e) {
-                mediaRecorder.start();
-                $(this).toggleClass("paused");
-            }).bind('mouseup mouseleave touchend', function () {
-                if (mediaRecorder.state !== 'inactive') {
-                    mediaRecorder.stop();
-                    $(this).toggleClass("paused");
-                }
-            });
-            mediaRecorder.addEventListener("dataavailable", event => {
-                audioChunks.push(event.data);
-
-            });
-            mediaRecorder.addEventListener("stop", () => {
-                //socket.broadcast.emit('audioMessage', audioChunks);
-                socket.emit('audioMessage', audioChunks);
-                audioChunks = [];
-            });
-        });
-</script>
+<script src="index.js"></script>

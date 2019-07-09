@@ -1,12 +1,17 @@
-var app = require("express")();
-var http = require("http").Server(app);
+const app = require("express")();
+const http = require("http").Server(app);
+const path = require('path');
 
-var io = require("socket.io")(http);
+const io = require("socket.io")(http);
 
-var Usercounter = 0;
+
+let Usercounter = 0;
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.join(__dirname, '../client/index.html'));
+});
+app.get('/index.js', function(req, res) {
+  res.sendFile((path.join(__dirname, '../client/index.js')));
 });
 
 io.on("connection", function(socket) {
@@ -22,6 +27,10 @@ io.on("connection", function(socket) {
   socket.on("audioMessage", function(msg) {
     io.emit("audioMessage", msg);
   });
+
+  socket.on("recordStarted", () => {
+    io.emit("playStarSound");
+  })
 });
 
 http.listen(3000, function() {
