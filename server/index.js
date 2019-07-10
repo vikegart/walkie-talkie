@@ -1,10 +1,12 @@
 const app = require("express")();
 const http = require("http").Server(app);
 const path = require('path');
+const cors = require('cors');
 
 const io = require("socket.io")(http);
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 
 let Usercounter = 0;
 
